@@ -1,0 +1,49 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="205dp"
+        android:layout_height="39dp"
+        android:layout_margin="20dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/augmedix_logo_main_card_v2" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/custom_title"
+            android:layout_marginTop="5dp"
+            android:textFontWeight="1000"
+            android:textSize="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorText"
+            android:text="Title"/>
+
+        <TextView
+            android:id="@+id/custom_message"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:maxLength="80"
+            android:textColor="@color/colorText"
+            android:textSize="20dp"
+            android:text="abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij"/>
+
+        <TextView
+            android:id="@+id/custom_actiontext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorText"
+            android:textSize="20dp"
+            android:layout_marginTop="60dp"
+            android:text="Tap to ..."/>
+    </LinearLayout>
+</LinearLayout>
