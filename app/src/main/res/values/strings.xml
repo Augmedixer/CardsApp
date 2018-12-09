@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">CardsApp</string>
+    <string name="version">Version 1.0</string>
 
     <string name="card_home">Home</string>
     <string name="card_streaming">Streaming A/V</string>
-    <string name="card_custom1">Custom 1</string>
-    <string name="card_custom2">Custom 2</string>
 </resources>
