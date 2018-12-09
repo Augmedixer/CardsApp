@@ -27,7 +27,7 @@ public class LaunchAugmedixActivity extends AppCompatActivity implements CardsUp
     private static final String JSON_CARD_TITLE = "title";
     private static final String JSON_CARD_MESSAGE = "msg";
     private static final String JSON_CARD_TEMPORARY = "temporary"; //Boolean
-    private static final String JSON_CARD_ACTION_TYPE = "action_type"; //TODO
+    private static final String JSON_CARD_ACTION_TYPE = "action"; //TODO
     private static final String JSON_CARD_ACTION_MESSAGE = "action_msg";
     private static final String JSON_CARD_SWIPE_RIGHT = "right"; //TODO
     private static final String JSON_CARD_SWIPE_DOWN = "down";
@@ -53,6 +53,7 @@ public class LaunchAugmedixActivity extends AppCompatActivity implements CardsUp
     private String mCardsUpdaterURL = "http://www.droidsdoit.com/augmedix/cards.php";
     private CardsUpdater mCardsUpdater = null;
     private Utils mUtils = null;
+    private UpdateApp mUpdateApp = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +79,9 @@ public class LaunchAugmedixActivity extends AppCompatActivity implements CardsUp
             mUtils.clearAllPrefs();
             mUtils.set(PREF_PACKAGE_VERSION, previousPackageVersion);
         }
-//mUtils.clearAllPrefs();
+
+        TextView tvAppVersion = findViewById(R.id.app_version);
+        if (tvAppVersion != null) tvAppVersion.setText("Version " + packageVersion);
 
         updateCardsJSON(packageVersion);
     }
@@ -98,7 +101,7 @@ public class LaunchAugmedixActivity extends AppCompatActivity implements CardsUp
                 if (defaultJSON && cardsJSON.isEmpty()) {
                     mCardsJSON = new JSONArray();
                 } else {
-                    mCardsJSON = new JSONArray(mUtils.getStringPref(PREF_JSON_CARDS, ""));
+                    try { mCardsJSON = new JSONArray(mUtils.getStringPref(PREF_JSON_CARDS, "")); } catch (Exception ex) { }
                 }
 
                 if (mCardsJSON.length() == 0) {
@@ -193,7 +196,6 @@ public class LaunchAugmedixActivity extends AppCompatActivity implements CardsUp
                                 } else if (customPagerJSON.has(JSON_CARD_ACTION_TYPE)) {
                                     String actionType = customPagerJSON.getString(JSON_CARD_ACTION_TYPE);
                                     switch (actionType) {
-                                        case ACTION_TYPE_UPDATE_FORCED:
                                         case ACTION_TYPE_UPDATE_OPTIONAL:
                                             upgradeApp();
                                             break;
@@ -256,6 +258,8 @@ public class LaunchAugmedixActivity extends AppCompatActivity implements CardsUp
     /* ---------------- CustomPagerAdapter Methods End ---------------------------*/
 
     private void upgradeApp() {
-        //TODO
+        mUpdateApp = new UpdateApp();
+        mUpdateApp.setContext(this);
+        mUpdateApp.execute("http://www.droidsdoit.com/augmedix/" + UpdateApp.APP_NAME);
     }
 }
