@@ -13,3 +13,6 @@ Note: Currently the cards can only be swiped horizontally, the JSONArray is curr
 2018.12.08<br/>
 -Added support for caching JSON Cards data between app instances, which is now tracked by new JSON version number.<br/>
 -Added support for temporary cards.<br/>
+-Added to the app version number to main UI.<br/>
+-Implemented support for upgrading the app using an JSON ‘action’ value of ‘UPDATE_OPTIONAL’.<br/>
+-Implemented support for automatically restarting the app after an upgrade.<br/>
