@@ -9,6 +9,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class CardsUpdater extends AsyncTask<String,Void,String> {
+    private final String TAG = CardsUpdater.class.getSimpleName();
+
     interface CardsUpdaterInterface {
         void onResult(String jsonCards);
         void onError(String error);
@@ -26,6 +28,7 @@ public class CardsUpdater extends AsyncTask<String,Void,String> {
         String jsonCards = "";
         mError = "";
         try {
+            Log.i(TAG,"CardsUpdate url: " + args[0]);
             URL url = new URL(args[0]);
             HttpURLConnection c = (HttpURLConnection) url.openConnection();
             c.setRequestMethod("GET");
@@ -44,7 +47,7 @@ public class CardsUpdater extends AsyncTask<String,Void,String> {
             jsonCards = sb.toString();
         } catch (Exception e) {
             mError = e.getMessage();
-            Log.e("CardsUpdate", "Update error! " + e.getMessage());
+            Log.e(TAG, "Update error! " + e.getMessage());
         }
         return jsonCards;
     }

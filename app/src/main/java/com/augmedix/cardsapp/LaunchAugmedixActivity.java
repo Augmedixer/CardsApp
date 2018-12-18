@@ -74,7 +74,7 @@ public class LaunchAugmedixActivity extends AppCompatActivity implements CardsUp
         }
 
         String previousPackageVersion = mUtils.getStringPref(PREF_PACKAGE_VERSION, "0.0");
-        if (packageVersion.compareTo(packageVersion) < 0) {
+        if (packageVersion.compareTo(previousPackageVersion) != 0) {
             Log.i(TAG, "onCreate detected application upgrade - clearing preferences");
             mUtils.clearAllPrefs();
             mUtils.set(PREF_PACKAGE_VERSION, previousPackageVersion);
@@ -187,11 +187,6 @@ public class LaunchAugmedixActivity extends AppCompatActivity implements CardsUp
                         public void onClick(View v) {
                             try {
                                 if (customPagerJSON.has(JSON_CARD_TEMPORARY)) {
-/*                                    synchronized (mCardsJSON) {
-                                        mCardsJSON.remove(position);
-                                        mUtils.set(PREF_JSON_CARDS, mCardsJSON.toString());
-                                    }
-*/
                                     remove(position);
                                 } else if (customPagerJSON.has(JSON_CARD_ACTION_TYPE)) {
                                     String actionType = customPagerJSON.getString(JSON_CARD_ACTION_TYPE);
