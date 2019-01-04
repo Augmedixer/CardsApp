@@ -1,8 +1,5 @@
 package com.augmedix.cardsapp;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -16,16 +13,12 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Calendar;
-
-import static android.content.Context.ALARM_SERVICE;
 
 public class UpdateApp extends AsyncTask<String,String,Void> {
     private static String TAG = UpdateApp.class.getSimpleName();
 
     private Context context;
-    public final static String APP_NAME = "app-debug.apk";
-    private static long RESTART_APP_DELAY = 15000L;
+    public final static String APP_NAME = "app-debug.apk"; //TODO change app name
 
     public void setContext(Context contextf){
         context = contextf;
@@ -71,28 +64,9 @@ public class UpdateApp extends AsyncTask<String,String,Void> {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(intent);
             }
-
-            //restartApp();
         } catch (Exception e) {
             Log.e("UpdateAPP", "Update error! " + e.getMessage());
         }
         return null;
-    }
-
-    private void restartApp() {
-        try {
-            Calendar calendar = Calendar.getInstance();
-            Intent intent = new Intent(context, LaunchAugmedixActivity.class);
-            intent.putExtra("upgraded", true);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    | Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    | Intent.FLAG_ACTIVITY_NEW_TASK);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-
-            ((AlarmManager) context.getSystemService(ALARM_SERVICE)).set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis() + RESTART_APP_DELAY, pendingIntent);
-            Log.i(TAG,"restartApp scheduled app to relaunch in " + RESTART_APP_DELAY + "ms");
-        } catch (Exception e) {
-            Log.e("restartApp", "Update error! " + e.getMessage());
-        }
     }
 }

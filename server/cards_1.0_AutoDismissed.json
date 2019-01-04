@@ -1,0 +1,1 @@
+{"version":"20190103","cards":[{"type":"CUSTOM","title":"Auto Dismiss","msg":"This card will disappear","action_msg":"This card will be dismissed in __COUNTDOWN__ seconds...","action":"AUTO_DISMISS"},{"type":"HOME"},{"type":"STREAMING"}]}
