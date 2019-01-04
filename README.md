@@ -1,4 +1,8 @@
 # CardsApp
+2019.01.03<br/>
+-Code cleanup using the CardManager and Card classes to convert the J… …SON card data.<br/>
+-Implemented support for AUTO_DISMISS and UPDATE_FORCED cards.<br/>
+-Added Server folder containing the cards.php and sample json files.<br/>
 
 2018.12.01<br/>
 Created a POC app called "CardsApp" with the following:<br/>
