@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
 public class LaunchAugmedixActivity extends AppCompatActivity implements CardsUpdater.CardsUpdaterInterface, CustomPagerAdapter.CardsActionInterface {
     private static final String TAG = LaunchAugmedixActivity.class.getSimpleName();
     private ViewPager mViewPager = null;
@@ -81,10 +83,11 @@ public class LaunchAugmedixActivity extends AppCompatActivity implements CardsUp
 
     private void initCards() {
         try {
+            String cardsVersion = mUtils.getStringPref(PREF_JSON_VERSION, "");
             String cardsJSON = mUtils.getStringPref(PREF_JSON_CARDS, "");
             synchronized (mCardManager) {
-                boolean loadSucceeded = false;
-                if (cardsJSON.isEmpty() == false) {
+                boolean loadSucceeded = cardsVersion.isEmpty() == false && cardsVersion.contentEquals(mCardManager.getVersion());
+                if (cardsJSON.isEmpty() == false && loadSucceeded == false) {
                     loadSucceeded = mCardManager.load(cardsJSON);
                 }
 
@@ -116,8 +119,8 @@ public class LaunchAugmedixActivity extends AppCompatActivity implements CardsUp
                 mUtils.set(PREF_JSON_VERSION, "");
                 mUtils.set(PREF_JSON_CARDS, "");
             } else {
-                mCardManager.load(jsonCards);
-                String version = mCardManager.getVersion();
+                JSONObject jsonObjectCards = new JSONObject(jsonCards);
+                String version = (String) jsonObjectCards.get(CardManager.JSON_VERSION);
 
                 if (version.compareTo(mUtils.getStringPref(PREF_JSON_VERSION, "")) != 0) {
                     mUtils.set(PREF_JSON_VERSION, version);
@@ -157,6 +160,9 @@ public class LaunchAugmedixActivity extends AppCompatActivity implements CardsUp
         try {
             if (card.mTemporary) {
                 remove(position);
+                mCardManager.setDismissed(card);
+                JSONObject jsonObject = mCardManager.toJSON();
+                if (jsonObject != null) mUtils.set(PREF_JSON_CARDS, jsonObject.toString());
             } else if (card.mActionType.isEmpty() == false) {
                 CustomPagerAdapter adapter = (CustomPagerAdapter) mViewPager.getAdapter();
                 switch (card.mActionType) {

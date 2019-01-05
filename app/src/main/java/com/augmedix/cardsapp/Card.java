@@ -31,6 +31,9 @@ public class Card {
     public static final String ACTION_TYPE_TAP_DISMISS = "TAP_DISMISS";
     public static final String ACTION_TYPE_AUTO_DISMISS = "AUTO_DISMISS";
 
+    private static int sIndex = 0;
+    public static void cleanIndex() {sIndex = 0;}
+
     public int mIndex = 0; //TODO
 
     public String mType = "";
@@ -42,10 +45,16 @@ public class Card {
 
     private boolean mDismissed = false;
 
+    Card(String type) {
+        mType = type;
+        mIndex = sIndex++;
+    }
+
     Card(String type, String title, String message) {
         mType = type;
         mTitle = title;
         mMessage = message;
+        mIndex = sIndex++;
     }
 
     Card(JSONObject jsonCard) {
@@ -63,6 +72,7 @@ public class Card {
         } catch (Exception ex) {
             Log.e(TAG, "Card JSONObject constructor exception: " + ex.getMessage());
         }
+        mIndex = sIndex++;
     }
 
     JSONObject toJSON() {
@@ -77,12 +87,18 @@ public class Card {
             if (mActionMessage.isEmpty() == false) jsonObject.put(JSON_CARD_ACTION_MESSAGE, mActionMessage);
 
             if (mDismissed) jsonObject.put(JSON_CARD_DISMISSED, mDismissed);
-
-            jsonObject.put(JSON_CARD_TEMPORARY, mTemporary);
         } catch (Exception ex) {
             Log.e(TAG, "toJSON exception: " + ex.getMessage());
         }
         return jsonObject;
+    }
+
+    public void setDismissed() {
+        mDismissed = true;
+    }
+
+    public boolean isDismissed() {
+        return mDismissed;
     }
 }
 
