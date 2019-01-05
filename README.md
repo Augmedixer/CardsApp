@@ -1,4 +1,9 @@
 # CardsApp
+2019.01.05<br/>
+-Implemented the toJSON method in CardsManager to convert the Cards & Version to a JSONObject.<br/>
+-Added logic to persist the state of the Cards, e.g. when a Temporary card is dismissed such that it's persisted between app instances.<br/>
+-Added logic to automatically append HOME & STREAMING cards if there were not defined in the JSON from the server and an UPDATE_FORCED Card is not configured.<br/>
+
 2019.01.03<br/>
 -Code cleanup using the CardManager and Card classes to convert the J… …SON card data.<br/>
 -Implemented support for AUTO_DISMISS and UPDATE_FORCED cards.<br/>
